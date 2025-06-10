@@ -1,0 +1,51 @@
+---
+import { categories } from '../data/categories';
+---
+
+<footer class="bg-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="/about" class="hover:text-blue-400">About</a></li>
+          <li><a href="/contact" class="hover:text-blue-400">Contact</a></li>
+          <li><a href="/database" class="hover:text-blue-400">Buy Database</a></li>
+          <li><a href="/add-listing" class="hover:text-blue-400">Add a Listing</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Categories</h3>
+        <ul class="space-y-2">
+          {categories.map(category => (
+            <li>
+              <a href={`/category/${category.slug}`} class="hover:text-blue-400">
+                {category.name} Affiliate Programs
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold">Commission Types</h3>
+        <ul class="space-y-2">
+          <li><a href="/type/recurring" class="hover:text-blue-400">Recurring Affiliate Programs</a></li>
+          <li><a href="/type/one-time" class="hover:text-blue-400">One-Time Affiliate Programs</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold">About Us</h3>
+        <p class="text-gray-400">
+          AffiliateProgram<span class="text-blue-400">DB</span>.xyz helps you discover and compare the best affiliate programs across different niches with our comprehensive database of 9,500+ programs.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+      <p>&copy; {new Date().getFullYear()} AffiliateProgram<span class="text-blue-400">DB</span>.xyz. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

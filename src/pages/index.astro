@@ -1,0 +1,209 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SearchFilter from '../components/SearchFilter.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import { programs } from '../data/programs';
+import { categories } from '../data/categories';
+import { getAllCategories, getProgramsByCategory, createSlug } from '../utils/csvParser';
+
+// Get CSV categories for the homepage
+const csvCategories = getAllCategories().slice(0, 6).map(category => ({
+  name: category,
+  slug: createSlug(category),
+  description: `Discover the best ${category.toLowerCase()} affiliate programs with competitive commissions and reliable tracking.`,
+  programCount: getProgramsByCategory(category).length
+}));
+---
+
+<Layout title="Affiliate Program Database - 9,500+ Programs Across All Niches">
+  <main>
+    <!-- Hero Section -->
+    <div class="relative h-[280px] mb-16">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-600 opacity-90"></div>
+      <img
+        src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80"
+        alt="Hero background"
+        class="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      <div class="relative h-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+          <span class="text-yellow-300">9,500+</span> Affiliate Programs Database
+        </h1>
+        <p class="text-xl text-white/90 mb-8 max-w-2xl animate-fade-in" style="animation-delay: 0.2s;">
+          The most comprehensive affiliate program database across all niches to help you find the perfect programs for your audience
+        </p>
+        <div class="w-full max-w-2xl animate-fade-in" style="animation-delay: 0.4s;">
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search affiliate programs..."
+              class="w-full px-8 py-4 text-lg rounded-full shadow-xl focus:ring-4 focus:ring-blue-400/30 focus:outline-none transition-all duration-300"
+            />
+            <button class="absolute right-16 top-1/2 -translate-y-1/2 bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-2 rounded-full transition-colors duration-300 flex items-center gap-2 text-sm" id="filterToggle">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+              Filter
+            </button>
+            <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors duration-300 text-sm">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 pb-16">
+      <!-- Hidden Filters -->
+      <div class="hidden mb-12 transition-all duration-300" id="filterSection">
+        <SearchFilter />
+      </div>
+      
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured High-Ticket Affiliate Programs</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        {programs.slice(0, 4).map((program, index) => (
+          <div style={`animation-delay: ${index * 0.1}s`}>
+            <ProgramCard program={program} />
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mb-24">
+        <a
+          href="/categories"
+          class="inline-flex items-center px-8 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all duration-300 hover:scale-105"
+        >
+          Browse All Categories
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Premium Database Promotion -->
+      <div class="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-2xl p-8 md:p-12 mb-24 text-white text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Get Access to Our Complete Affiliate Program Database</h2>
+        <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          Unlock our premium database featuring over 9,500 affiliate programs across 50+ niches. Save time researching and find the perfect programs for your audience.
+        </p>
+        <a
+          href="/database"
+          class="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 to-red-600 hover:from-pink-600 hover:to-red-700 text-white font-medium text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Access Full Database
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Categories Section -->
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Browse by Category</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+        {csvCategories.map((category, index) => (
+          <div style={`animation-delay: ${index * 0.1}s`}>
+            <CategoryCard category={category} />
+          </div>
+        ))}
+      </div>
+
+      <!-- SEO Content Section -->
+      <div class="prose prose-lg max-w-none mb-24">
+        <h2>What is an Affiliate Program Database?</h2>
+        <p>
+          An affiliate program database is a comprehensive collection of affiliate programs organized by category, commission rates, and other important metrics. 
+          Our database includes detailed information on 9,500+ affiliate programs, making it easy for affiliate marketers to find the most suitable programs for their audience and niche.
+        </p>
+
+        <h2>Why Use an Affiliate Program Database?</h2>
+        <p>
+          Using a quality affiliate program database saves you countless hours of research. Instead of manually searching for programs across 
+          different networks and websites, you can quickly filter through thousands of options based on your specific requirements. 
+          This efficiency allows you to focus more on creating valuable content and less on program research.
+        </p>
+
+        <h2>How to Find the Best Affiliate Programs for Your Niche</h2>
+        <p>
+          Finding the best affiliate programs for your niche requires understanding your audience's needs and preferences. 
+          With our database, you can:
+        </p>
+        <ul>
+          <li>Filter programs by category to find niche-specific opportunities</li>
+          <li>Compare commission rates to maximize your earning potential</li>
+          <li>Check cookie duration to understand attribution periods</li>
+          <li>Evaluate program reputation and payment reliability</li>
+          <li>Find both recurring and one-time commission structures</li>
+        </ul>
+
+        <h2>How to Make Money with Affiliate Marketing</h2>
+        <p>
+          To succeed with affiliate marketing:
+        </p>
+        <ul>
+          <li>Choose programs that align with your audience's interests</li>
+          <li>Create valuable content that naturally incorporates affiliate recommendations</li>
+          <li>Build trust with your audience through honest reviews and recommendations</li>
+          <li>Track your performance and optimize your strategy based on conversion data</li>
+          <li>Diversify your affiliate program portfolio to create multiple income streams</li>
+          <li>Stay updated with new affiliate programs and commission structure changes</li>
+        </ul>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-2xl p-8 md:p-12 text-white text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Elevate Your Affiliate Marketing?</h2>
+        <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          Get instant access to our curated database of 9,500+ affiliate programs and find the perfect partners for your business today.
+        </p>
+        <a
+          href="/database"
+          class="inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 to-red-600 hover:from-pink-600 hover:to-red-700 text-white font-medium text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Access Complete Database
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const filterToggle = document.getElementById('filterToggle');
+  const filterSection = document.getElementById('filterSection');
+
+  filterToggle?.addEventListener('click', () => {
+    filterSection?.classList.toggle('hidden');
+  });
+</script>
+
+<style>
+  .prose {
+    @apply text-gray-700;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mt-12 mb-6;
+  }
+
+  .prose p {
+    @apply mb-6 leading-relaxed;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-6;
+  }
+
+  .hover-lift {
+    transition: transform 0.2s ease-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+</style>
+</Layout>
